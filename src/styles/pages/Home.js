@@ -47,6 +47,7 @@ export const Header = styled.header`
 
       span {
         font-weight: 500;
+        margin-left: 0.2rem;
       }
     }
   }
