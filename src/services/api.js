@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { parseCookies } from 'nookies';
+import { URL_API } from '../utils/constants';
 
 export function getAPICliet(ctx) {
   const { '@ioasys.token': token } = parseCookies(ctx);
 
   const api = axios.create({
-    baseURL: 'https://books.ioasys.com.br/api/v1',
+    baseURL: URL_API,
   });
 
   if (token) {

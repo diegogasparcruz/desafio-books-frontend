@@ -15,7 +15,7 @@ export const Container = styled.div`
   transition: box-shadow 0.2s;
 
   &:hover {
-    box-shadow: 0px 6px 24px rgba(84, 16, 95, 0.9);
+    box-shadow: 0px 16px 80px rgba(84, 16, 95, 0.32);
   }
 `;
 
@@ -31,6 +31,7 @@ export const Image = styled.div`
 `;
 
 export const Summary = styled.div`
+  width: 100%;
   display: grid;
   align-items: center;
 `;

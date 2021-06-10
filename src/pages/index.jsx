@@ -1,4 +1,10 @@
+import { useContext } from 'react';
 import Head from 'next/head';
+import Router from 'next/router';
+import { parseCookies } from 'nookies';
+import * as authService from '../services/authService';
+import { AuthContext } from '../contexts/AuthContext';
+import { AUTH_TOKEN } from '../utils/constants';
 
 import { Logo } from '../components/Logo';
 import { Button } from '../components/Button';
@@ -7,6 +13,13 @@ import { Card } from '../components/Card';
 import { Container, Content, Header, Main, Footer } from '../styles/pages/Home';
 
 export default function Home() {
+  const { user } = useContext(AuthContext);
+
+  function logout() {
+    authService.logout();
+    Router.push('/login');
+  }
+
   return (
     <Container>
       <Head>
@@ -16,9 +29,9 @@ export default function Home() {
         <Header>
           <Logo themeColor="dark" />
           <p>
-            Bem vindo, <span>Diego Gaspar!</span>
+            Bem vindo,<span> {user?.name}!</span>
           </p>
-          <Button>
+          <Button onClick={logout}>
             <img src="icons/logout.svg" alt="Logout" />
           </Button>
         </Header>
@@ -159,3 +172,20 @@ export default function Home() {
     </Container>
   );
 }
+
+export const getServerSideProps = async ctx => {
+  const { [AUTH_TOKEN]: token } = parseCookies(ctx);
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/login',
+        permantent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
