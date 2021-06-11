@@ -1,11 +1,28 @@
 import React from 'react';
 
-import * as S from './styles';
+import * as Styles from './styles';
 
-export function Button({ children, type, onClick, disabled }) {
+export function Button({
+  children,
+  label,
+  type,
+  onClick,
+  outline,
+  width,
+  disabled,
+  ...props
+}) {
   return (
-    <S.Button type={type || 'button'} onClick={onClick} disabled={disabled}>
+    <Styles.Button
+      outline={outline}
+      width={width}
+      type={type || 'button'}
+      onClick={onClick}
+      disabled={disabled}
+      {...props}
+    >
+      {label}
       {children}
-    </S.Button>
+    </Styles.Button>
   );
 }

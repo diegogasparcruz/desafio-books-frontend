@@ -40,7 +40,7 @@ export default function Home({ query, books, totalPages }) {
           <p>
             Bem vindo,<span> {user?.name}!</span>
           </p>
-          <Button onClick={logout}>
+          <Button onClick={logout} outline>
             <img src="icons/logout.svg" alt="Logout" />
           </Button>
         </Header>
@@ -52,7 +52,11 @@ export default function Home({ query, books, totalPages }) {
         </Main>
 
         <Footer>
-          <Button onClick={() => changePage(page - 1)} disabled={page === 1}>
+          <Button
+            onClick={() => changePage(page - 1)}
+            disabled={page === 1}
+            outline
+          >
             <img src="icons/arrow-left.svg" alt="Previous" />
           </Button>
           <span>
@@ -61,6 +65,7 @@ export default function Home({ query, books, totalPages }) {
           <Button
             onClick={() => changePage(page + 1)}
             disabled={page === Math.ceil(totalPages)}
+            outline
           >
             <img src="icons/arrow-right.svg" alt="Next" />
           </Button>
