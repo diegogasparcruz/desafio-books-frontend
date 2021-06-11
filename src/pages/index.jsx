@@ -1,9 +1,11 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 import { parseCookies } from 'nookies';
+import { getAPICliet } from '../services/api';
 import * as authService from '../services/authService';
-import { AuthContext } from '../contexts/AuthContext';
+import { usePagination } from '../hooks/usePagination';
+import { useAuth } from '../contexts/AuthContext';
 import { AUTH_TOKEN } from '../utils/constants';
 
 import { Logo } from '../components/Logo';
@@ -11,14 +13,13 @@ import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 
 import { Container, Content, Header, Main, Footer } from '../styles/pages/Home';
-import { getAPICliet } from '../services/api';
-import { usePagination } from '../hooks/usePagination';
 
 export default function Home({ query, books, totalPages }) {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
   const [page, setPage] = useState(Number(query.page || 1));
-  const { isFallback } = usePagination(page);
-  console.log(books);
+
+  usePagination(page);
+
   function logout() {
     authService.logout();
     Router.push('/login');
@@ -46,16 +47,7 @@ export default function Home({ query, books, totalPages }) {
 
         <Main>
           {books.map(book => (
-            <Card
-              key={book.id}
-              title={book.title}
-              authors={book.authors}
-              pageCount={book.pageCount}
-              publisher={book.publisher}
-              published={book.published}
-            >
-              <img src={book.imageUrl || '/image-unknown.svg'} alt="Livro" />
-            </Card>
+            <Card key={book.id} book={book} />
           ))}
         </Main>
 

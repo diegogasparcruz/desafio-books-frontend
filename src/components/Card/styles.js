@@ -24,26 +24,34 @@ export const Image = styled.div`
   align-items: center;
   justify-content: center;
 
-  img {
+  .image {
     width: 81px;
     height: 122px;
+    background-image: url(${({ imageUrl }) => imageUrl || 'image-unknown.svg'});
+    background-position: center;
+    background-size: cover;
+    filter: drop-shadow(0px 6px 9px rgba(0, 0, 0, 0.15));
   }
 `;
 
 export const Summary = styled.div`
-  width: 100%;
+  width: 160px;
   display: grid;
   align-items: center;
 `;
 
 export const Title = styled.section`
+  //TODO: Pensar em uma solução melhor.
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   h1 {
     font-size: 0.875rem;
   }
 
   span {
     font-size: 0.75rem;
-    padding: 0;
     color: #ab2680;
   }
 `;
