@@ -16,7 +16,7 @@ export function Card({
       <Summary>
         <Title>
           <h1>{title}</h1>
-          <span>{authors}</span>
+          <span>{authors.join(', ')}</span>
         </Title>
         <Description>
           <span>{pageCount} páginas</span>

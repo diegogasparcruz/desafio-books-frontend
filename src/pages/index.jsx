@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 import { parseCookies } from 'nookies';
@@ -11,13 +11,21 @@ import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 
 import { Container, Content, Header, Main, Footer } from '../styles/pages/Home';
+import { getAPICliet } from '../services/api';
+import { usePagination } from '../hooks/usePagination';
 
-export default function Home() {
+export default function Home({ query, books, totalPages }) {
   const { user } = useContext(AuthContext);
-
+  const [page, setPage] = useState(Number(query.page || 1));
+  const { isFallback } = usePagination(page);
+  console.log(books);
   function logout() {
     authService.logout();
     Router.push('/login');
+  }
+
+  function changePage(pageChanged) {
+    setPage(pageChanged);
   }
 
   return (
@@ -37,134 +45,31 @@ export default function Home() {
         </Header>
 
         <Main>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
+          {books.map(book => (
+            <Card
+              key={book.id}
+              title={book.title}
+              authors={book.authors}
+              pageCount={book.pageCount}
+              publisher={book.publisher}
+              published={book.published}
+            >
+              <img src={book.imageUrl || '/image-unknown.svg'} alt="Livro" />
+            </Card>
+          ))}
         </Main>
 
         <Footer>
-          <Button>
+          <Button onClick={() => changePage(page - 1)} disabled={page === 1}>
             <img src="icons/arrow-left.svg" alt="Previous" />
           </Button>
-          <span>Página 1 de 100</span>
-          <Button>
+          <span>
+            Página {page} de {Math.ceil(totalPages)}
+          </span>
+          <Button
+            onClick={() => changePage(page + 1)}
+            disabled={page === Math.ceil(totalPages)}
+          >
             <img src="icons/arrow-right.svg" alt="Next" />
           </Button>
         </Footer>
@@ -176,6 +81,8 @@ export default function Home() {
 export const getServerSideProps = async ctx => {
   const { [AUTH_TOKEN]: token } = parseCookies(ctx);
 
+  const apiClient = getAPICliet(ctx);
+
   if (!token) {
     return {
       redirect: {
@@ -185,7 +92,15 @@ export const getServerSideProps = async ctx => {
     };
   }
 
+  const response = await apiClient.get(`/books?page=${ctx.query.page || 1}`);
+  const books = response.data.data;
+  const totalPages = response.data.totalPages;
+
   return {
-    props: {},
+    props: {
+      query: { page: ctx.query.page || 1 },
+      books,
+      totalPages,
+    },
   };
 };
