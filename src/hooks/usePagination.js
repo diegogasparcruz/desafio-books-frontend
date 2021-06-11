@@ -1,21 +1,14 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export const usePagination = page => {
-  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
     const pageUrl = router.pathname;
 
-    setLoading(true);
-    router
-      .push(`${pageUrl}?page=${page}`, undefined, {
-        shallow: false,
-      })
-      .then(() => {
-        setLoading(false);
-      });
+    router.push(`${pageUrl}?page=${page}`, undefined, {
+      shallow: false,
+    });
   }, [page]);
-  return { isFallback: router.isFallback, loading };
 };
