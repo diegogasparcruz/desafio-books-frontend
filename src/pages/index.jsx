@@ -1,9 +1,11 @@
-import { useContext } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 import { parseCookies } from 'nookies';
+import { getAPICliet } from '../services/api';
 import * as authService from '../services/authService';
-import { AuthContext } from '../contexts/AuthContext';
+import { usePagination } from '../hooks/usePagination';
+import { useAuth } from '../contexts/AuthContext';
 import { AUTH_TOKEN } from '../utils/constants';
 
 import { Logo } from '../components/Logo';
@@ -12,12 +14,19 @@ import { Card } from '../components/Card';
 
 import { Container, Content, Header, Main, Footer } from '../styles/pages/Home';
 
-export default function Home() {
-  const { user } = useContext(AuthContext);
+export default function Home({ query, books, totalPages }) {
+  const { user } = useAuth();
+  const [page, setPage] = useState(Number(query.page || 1));
+
+  usePagination(page);
 
   function logout() {
     authService.logout();
     Router.push('/login');
+  }
+
+  function changePage(pageChanged) {
+    setPage(pageChanged);
   }
 
   return (
@@ -31,140 +40,33 @@ export default function Home() {
           <p>
             Bem vindo,<span> {user?.name}!</span>
           </p>
-          <Button onClick={logout}>
+          <Button onClick={logout} outline>
             <img src="icons/logout.svg" alt="Logout" />
           </Button>
         </Header>
 
         <Main>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
+          {books.map(book => (
+            <Card key={book.id} book={book} />
+          ))}
         </Main>
 
         <Footer>
-          <Button>
+          <Button
+            onClick={() => changePage(page - 1)}
+            disabled={page === 1}
+            outline
+          >
             <img src="icons/arrow-left.svg" alt="Previous" />
           </Button>
-          <span>Página 1 de 100</span>
-          <Button>
+          <span>
+            Página {page} de {Math.ceil(totalPages)}
+          </span>
+          <Button
+            onClick={() => changePage(page + 1)}
+            disabled={page === Math.ceil(totalPages)}
+            outline
+          >
             <img src="icons/arrow-right.svg" alt="Next" />
           </Button>
         </Footer>
@@ -176,6 +78,8 @@ export default function Home() {
 export const getServerSideProps = async ctx => {
   const { [AUTH_TOKEN]: token } = parseCookies(ctx);
 
+  const apiClient = getAPICliet(ctx);
+
   if (!token) {
     return {
       redirect: {
@@ -185,7 +89,15 @@ export const getServerSideProps = async ctx => {
     };
   }
 
+  const response = await apiClient.get(`/books?page=${ctx.query.page || 1}`);
+  const books = response.data.data;
+  const totalPages = response.data.totalPages;
+
   return {
-    props: {},
+    props: {
+      query: { page: ctx.query.page || 1 },
+      books,
+      totalPages,
+    },
   };
 };

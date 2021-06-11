@@ -37,5 +37,13 @@ export const InputWrap = styled.div`
     background: transparent;
     border: none;
     color: #fff;
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+      transition: background-color 5000s ease-in-out 0s;
+      -webkit-text-fill-color: #fff !important;
+    }
   }
 `;

@@ -2,26 +2,21 @@ import React from 'react';
 
 import { Container, Image, Summary, Title, Description } from './styles';
 
-export function Card({
-  children,
-  title,
-  authors,
-  pageCount,
-  publisher,
-  published,
-}) {
+export function Card({ book }) {
   return (
     <Container>
-      <Image>{children}</Image>
+      <Image imageUrl={book.imageUrl}>
+        <div className="image" />
+      </Image>
       <Summary>
         <Title>
-          <h1>{title}</h1>
-          <span>{authors}</span>
+          <h1>{book.title}</h1>
+          <span>{book.authors.join(', ')}</span>
         </Title>
         <Description>
-          <span>{pageCount} páginas</span>
-          <span>Editora {publisher}</span>
-          <span>Publicado em {published}</span>
+          <span>{book.pageCount} páginas</span>
+          <span>Editora {book.publisher}</span>
+          <span>Publicado em {book.published}</span>
         </Description>
       </Summary>
     </Container>
