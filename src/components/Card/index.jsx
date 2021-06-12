@@ -2,9 +2,9 @@ import React from 'react';
 
 import { Container, Image, Summary, Title, Description } from './styles';
 
-export function Card({ book }) {
+export function Card({ book, onClick }) {
   return (
-    <Container>
+    <Container onClick={onClick}>
       <Image imageUrl={book.imageUrl}>
         <div className="image" />
       </Image>
