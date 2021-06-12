@@ -13,10 +13,13 @@ import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 
 import { Container, Content, Header, Main, Footer } from '../styles/pages/Home';
+import { Modal } from '../components/Modal';
 
 export default function Home({ query, books, totalPages }) {
   const { user } = useAuth();
   const [page, setPage] = useState(Number(query.page || 1));
+  const [bookModal, setBookModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   usePagination(page);
 
@@ -27,6 +30,11 @@ export default function Home({ query, books, totalPages }) {
 
   function changePage(pageChanged) {
     setPage(pageChanged);
+  }
+
+  function openModal(book) {
+    setBookModal(book);
+    setShowModal(true);
   }
 
   return (
@@ -47,7 +55,7 @@ export default function Home({ query, books, totalPages }) {
 
         <Main>
           {books.map(book => (
-            <Card key={book.id} book={book} />
+            <Card key={book.id} book={book} onClick={() => openModal(book)} />
           ))}
         </Main>
 
@@ -71,6 +79,10 @@ export default function Home({ query, books, totalPages }) {
           </Button>
         </Footer>
       </Content>
+
+      {showModal && (
+        <Modal book={bookModal} onClick={() => setShowModal(false)} />
+      )}
     </Container>
   );
 }
@@ -89,7 +101,9 @@ export const getServerSideProps = async ctx => {
     };
   }
 
-  const response = await apiClient.get(`/books?page=${ctx.query.page || 1}`);
+  const response = await apiClient.get(
+    `/books?page=${ctx.query.page || 1}&amount=12`
+  );
   const books = response.data.data;
   const totalPages = response.data.totalPages;
 
