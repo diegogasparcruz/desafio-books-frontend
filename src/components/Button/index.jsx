@@ -1,4 +1,5 @@
 import React from 'react';
+import { Loading } from '../Loading';
 
 import * as Styles from './styles';
 
@@ -10,6 +11,7 @@ export function Button({
   outline,
   width,
   disabled,
+  loading,
   ...props
 }) {
   return (
@@ -21,8 +23,9 @@ export function Button({
       disabled={disabled}
       {...props}
     >
-      {label}
-      {children}
+      {loading && <Loading />}
+      {!loading && label}
+      {!loading && children}
     </Styles.Button>
   );
 }

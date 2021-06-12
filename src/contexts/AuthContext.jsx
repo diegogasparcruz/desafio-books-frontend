@@ -1,15 +1,14 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import Router from 'next/router';
-import { setCookie } from 'nookies';
 
 import * as authService from '../services/authService';
-import { api } from '../services/api';
-import { AUTH_TOKEN, USER_TOKEN } from '../utils/constants';
 
 export const AuthContext = createContext({});
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const response = authService.getUser();
@@ -20,29 +19,22 @@ export function AuthProvider({ children }) {
   }, []);
 
   async function signIn({ email, password }) {
-    try {
-      const { data, headers } = await authService.signIn({ email, password });
+    setLoading(true);
 
-      setCookie(undefined, AUTH_TOKEN, headers.authorization, {
-        maxAge: 60 * 60 * 24, // 1 day
-      });
+    const response = await authService.signIn({ email, password });
+    setError('');
 
-      setCookie(undefined, USER_TOKEN, JSON.stringify(data), {
-        maxAge: 60 * 60 * 24, // 1 day
-      });
-
-      api.defaults.headers['Authorization'] = `Bearer ${headers.authorization}`;
-
-      setUser(data);
-
+    if (response.data) {
+      setUser(response.data);
       Router.push('/');
-    } catch (err) {
-      console.log(err.response);
+    } else {
+      setError(response.error);
     }
+    setLoading(false);
   }
 
   return (
-    <AuthContext.Provider value={{ signIn, user }}>
+    <AuthContext.Provider value={{ signIn, user, error, loading }}>
       {children}
     </AuthContext.Provider>
   );
