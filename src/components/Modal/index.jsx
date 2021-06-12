@@ -22,12 +22,15 @@ export function Modal({ book, onClick }) {
       <Container>
         <Content>
           <Image>
-            <img src={book.imageUrl || 'image-unknown.svg'} alt="Livro" />
+            <img
+              src={book.imageUrl || 'image-unknown.svg'}
+              alt="Capa do livro"
+            />
           </Image>
 
           <Summary>
             <header>
-              <h1>{book.title}</h1>
+              <h1 title={book.title}>{book.title}</h1>
               <span>{book.authors.join(', ')}</span>
             </header>
 
