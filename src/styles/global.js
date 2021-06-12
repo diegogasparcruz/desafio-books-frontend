@@ -36,4 +36,13 @@ export default createGlobalStyle`
     color: inherit;
     text-decoration: none;
   }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #B22E6F;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0.25rem;
+    border-radius: 1.875rem;
+  }
 `;

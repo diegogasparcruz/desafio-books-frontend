@@ -41,18 +41,23 @@ export const Summary = styled.div`
 `;
 
 export const Title = styled.section`
-  //TODO: Pensar em uma solução melhor.
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
   h1 {
     font-size: 0.875rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   span {
     font-size: 0.75rem;
     color: #ab2680;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 `;
 
