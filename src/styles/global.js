@@ -39,10 +39,10 @@ export default createGlobalStyle`
 
   ::-webkit-scrollbar-thumb {
     background-color: #B22E6F;
+    border-radius: 30px;
   }
 
   ::-webkit-scrollbar {
     width: 0.25rem;
-    border-radius: 1.875rem;
   }
 `;

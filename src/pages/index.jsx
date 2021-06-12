@@ -91,6 +91,7 @@ export const getServerSideProps = async ctx => {
   const { [AUTH_TOKEN]: token } = parseCookies(ctx);
 
   const apiClient = getAPICliet(ctx);
+  const limitItens = 12;
 
   if (!token) {
     return {
@@ -102,7 +103,7 @@ export const getServerSideProps = async ctx => {
   }
 
   const response = await apiClient.get(
-    `/books?page=${ctx.query.page || 1}&amount=12`
+    `/books?page=${ctx.query.page || 1}&amount=${limitItens}`
   );
   const books = response.data.data;
   const totalPages = response.data.totalPages;

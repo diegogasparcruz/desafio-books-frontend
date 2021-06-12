@@ -10,8 +10,8 @@ export function Card({ book, onClick }) {
       </Image>
       <Summary>
         <Title>
-          <h1>{book.title}</h1>
-          <span>{book.authors.join(', ')}</span>
+          <h1 title={book.title}>{book.title}</h1>
+          <span title={book.authors}>{book.authors.join(', ')}</span>
         </Title>
         <Description>
           <span>{book.pageCount} páginas</span>
