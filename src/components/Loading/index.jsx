@@ -1,8 +1,8 @@
 import { Container } from './styles';
 
-export function Loading({ size, alignCenter }) {
+export function Loading({ size, alignCenter, color }) {
   return (
-    <Container size={size} alignCenter={alignCenter}>
+    <Container size={size} alignCenter={alignCenter} color={color}>
       <div />
       <div />
       <div />

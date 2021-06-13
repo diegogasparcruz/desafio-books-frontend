@@ -5,13 +5,13 @@ import { Tooltip } from '../Tooltip';
 import { Container, InputWrap } from './styles';
 
 export const Input = React.forwardRef(
-  ({ children, label, type, name, error, ...rest }, ref) => {
+  ({ children, label, type, name, error, ...props }, ref) => {
     return (
       <>
         <Container>
           <InputWrap>
             <span>{label}</span>
-            <input ref={ref} type={type} name={name} {...rest} />
+            <input ref={ref} type={type} name={name} {...props} />
           </InputWrap>
           {children}
         </Container>

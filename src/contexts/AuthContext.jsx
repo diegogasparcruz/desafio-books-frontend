@@ -9,12 +9,25 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [sessionExpiration, setSessionExpiration] = useState(false);
 
   useEffect(() => {
     const response = authService.getUser();
 
     if (response) {
       setUser(response);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (sessionExpiration) {
+      setLoading(true);
+      authService.refreshToken().then(response => {
+        if (!response.error) {
+          Router.push('/');
+        }
+        setLoading(false);
+      });
     }
   }, []);
 
@@ -38,8 +51,14 @@ export function AuthProvider({ children }) {
     Router.push('/login');
   }
 
+  function handleSessionExpiration(sessionExpiration_) {
+    setSessionExpiration(sessionExpiration_);
+  }
+
   return (
-    <AuthContext.Provider value={{ signIn, logout, user, error, loading }}>
+    <AuthContext.Provider
+      value={{ signIn, logout, user, error, loading, handleSessionExpiration }}
+    >
       {children}
     </AuthContext.Provider>
   );
