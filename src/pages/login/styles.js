@@ -8,7 +8,7 @@ export const Container = styled.div`
   background-attachment: fixed;
   height: 100vh;
 
-  opacity: ${({ loading }) => (loading ? '0.6' : '1')};
+  opacity: ${({ isLoading }) => (isLoading ? '0.6' : '1')};
 
   display: flex;
   flex-direction: column;
