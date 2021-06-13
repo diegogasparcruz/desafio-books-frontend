@@ -15,6 +15,10 @@ export function BookProvider({ children }) {
   useEffect(() => {
     const pageUrl = router.pathname;
 
+    if (pageUrl !== '/') {
+      return;
+    }
+
     setLoading(true);
 
     router

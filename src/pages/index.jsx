@@ -93,7 +93,7 @@ export const getServerSideProps = async ctx => {
   } catch (err) {
     return {
       redirect: {
-        destination: '/login',
+        destination: '/logout',
         permantent: false,
       },
     };
