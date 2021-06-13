@@ -1,3 +1,4 @@
+import { useBook } from '../../hooks/useBook';
 import { Button } from '../Button';
 import {
   Container,
@@ -10,11 +11,13 @@ import {
   SectionReview,
 } from './styles';
 
-export function Modal({ book, onClick }) {
+export function Modal({ book }) {
+  const { closeModal } = useBook();
+
   return (
     <Overlay>
       <CloseModal>
-        <Button outline onClick={onClick}>
+        <Button outline onClick={closeModal}>
           <img src="/icons/close.svg" alt="Fechar modal" />
         </Button>
       </CloseModal>

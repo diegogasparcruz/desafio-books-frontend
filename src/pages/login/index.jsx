@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 
 import { Input } from '../../components/Input';
 import { Logo } from '../../components/Logo';

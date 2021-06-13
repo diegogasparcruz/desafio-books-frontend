@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 const ring = keyframes`
   0% {
@@ -11,16 +11,27 @@ const ring = keyframes`
 
 export const Container = styled.div`
   display: inline-block;
-  position: relative;
-  width: 1.375rem;
-  height: 1.375rem;
+  width: ${({ size }) => (size ? `${size}rem` : '1.375rem')};
+  height: ${({ size }) => (size ? `${size}rem` : '1.375rem')};
+
+  ${({ alignCenter }) =>
+    alignCenter
+      ? css`
+          position: absolute;
+          align-self: center;
+          justify-content: center;
+          justify-self: center;
+        `
+      : css`
+          position: relative;
+        `};
 
   div {
     box-sizing: border-box;
     display: block;
     position: absolute;
-    width: 1rem;
-    height: 1rem;
+    width: ${({ size }) => (size ? `${size}rem` : '1rem')};
+    height: ${({ size }) => (size ? `${size}rem` : '1rem')};
     left: 0;
     top: 0;
     margin: 0.25rem;

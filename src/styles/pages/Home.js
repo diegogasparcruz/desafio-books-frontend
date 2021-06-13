@@ -53,22 +53,6 @@ export const Header = styled.header`
   }
 `;
 
-export const Main = styled.main`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
-  gap: 1rem;
-
-  div {
-    justify-self: center;
-  }
-
-  @media (min-width: 878px) {
-    div {
-      justify-self: normal;
-    }
-  }
-`;
-
 export const Footer = styled.footer`
   display: flex;
   flex-direction: row;

@@ -1,12 +1,15 @@
 import { AuthProvider } from '../contexts/AuthContext';
+import { BookProvider } from '../contexts/BookContext';
 
 import GlobalStyle from '../styles/global';
 
 function MyApp({ Component, pageProps }) {
   return (
     <AuthProvider>
-      <Component {...pageProps} />
-      <GlobalStyle />
+      <BookProvider>
+        <Component {...pageProps} />
+        <GlobalStyle />
+      </BookProvider>
     </AuthProvider>
   );
 }

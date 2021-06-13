@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import Router from 'next/router';
 
 import * as authService from '../services/authService';
@@ -33,13 +33,14 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }
 
+  function logout() {
+    authService.logout();
+    Router.push('/login');
+  }
+
   return (
-    <AuthContext.Provider value={{ signIn, user, error, loading }}>
+    <AuthContext.Provider value={{ signIn, logout, user, error, loading }}>
       {children}
     </AuthContext.Provider>
   );
 }
-
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
