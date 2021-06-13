@@ -1,41 +1,29 @@
-import { useState } from 'react';
 import Head from 'next/head';
-import Router from 'next/router';
 import { parseCookies } from 'nookies';
 import { getAPICliet } from '../services/api';
-import * as authService from '../services/authService';
-import { usePagination } from '../hooks/usePagination';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../hooks/useAuth';
+import { useBook } from '../hooks/useBook';
 import { AUTH_TOKEN } from '../utils/constants';
+import { verifyPage } from '../utils/verifyPage';
 
 import { Logo } from '../components/Logo';
 import { Button } from '../components/Button';
-import { Card } from '../components/Card';
-
-import { Container, Content, Header, Main, Footer } from '../styles/pages/Home';
+import { ListBooks } from '../components/ListBooks';
 import { Modal } from '../components/Modal';
 
-export default function Home({ query, books, totalPages }) {
-  const { user } = useAuth();
-  const [page, setPage] = useState(Number(query.page || 1));
-  const [bookModal, setBookModal] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+import { Container, Content, Header, Footer } from '../styles/pages/Home';
 
-  usePagination(page);
-
-  function logout() {
-    authService.logout();
-    Router.push('/login');
-  }
-
-  function changePage(pageChanged) {
-    setPage(pageChanged);
-  }
-
-  function openModal(book) {
-    setBookModal(book);
-    setShowModal(true);
-  }
+export default function Home({ books, totalPages }) {
+  const { user, logout } = useAuth();
+  const {
+    page,
+    nextPage,
+    previousPage,
+    loading,
+    isShowModal,
+    openModal,
+    book,
+  } = useBook();
 
   return (
     <Container>
@@ -53,36 +41,22 @@ export default function Home({ query, books, totalPages }) {
           </Button>
         </Header>
 
-        <Main>
-          {books.map(book => (
-            <Card key={book.id} book={book} onClick={() => openModal(book)} />
-          ))}
-        </Main>
+        <ListBooks books={books} onClick={openModal} loading={loading} />
 
         <Footer>
-          <Button
-            onClick={() => changePage(page - 1)}
-            disabled={page === 1}
-            outline
-          >
+          <Button onClick={previousPage} disabled={page === 1} outline>
             <img src="icons/arrow-left.svg" alt="Previous" />
           </Button>
           <span>
-            Página {page} de {Math.ceil(totalPages)}
+            Página {page} de {totalPages}
           </span>
-          <Button
-            onClick={() => changePage(page + 1)}
-            disabled={page === Math.ceil(totalPages)}
-            outline
-          >
+          <Button onClick={nextPage} disabled={page >= totalPages} outline>
             <img src="icons/arrow-right.svg" alt="Next" />
           </Button>
         </Footer>
       </Content>
 
-      {showModal && (
-        <Modal book={bookModal} onClick={() => setShowModal(false)} />
-      )}
+      {isShowModal && <Modal book={book} />}
     </Container>
   );
 }
@@ -92,6 +66,7 @@ export const getServerSideProps = async ctx => {
 
   const apiClient = getAPICliet(ctx);
   const limitItens = 12;
+  const page = verifyPage(ctx.query.page);
 
   if (!token) {
     return {
@@ -102,17 +77,25 @@ export const getServerSideProps = async ctx => {
     };
   }
 
-  const response = await apiClient.get(
-    `/books?page=${ctx.query.page || 1}&amount=${limitItens}`
-  );
-  const books = response.data.data;
-  const totalPages = response.data.totalPages;
+  try {
+    const response = await apiClient.get(
+      `/books?page=${page}&amount=${limitItens}`
+    );
+    const books = response.data.data;
+    const totalPages = Math.ceil(response.data.totalPages);
 
-  return {
-    props: {
-      query: { page: ctx.query.page || 1 },
-      books,
-      totalPages,
-    },
-  };
+    return {
+      props: {
+        books,
+        totalPages,
+      },
+    };
+  } catch (err) {
+    return {
+      redirect: {
+        destination: '/login',
+        permantent: false,
+      },
+    };
+  }
 };
