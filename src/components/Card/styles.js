@@ -1,6 +1,16 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 
+const formatText = numberLine => {
+  return css`
+    display: -webkit-box;
+    -webkit-line-clamp: ${numberLine};
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  `;
+};
+
 export const Container = styled.div`
   max-width: 288px;
   width: 100%;
@@ -52,19 +62,11 @@ export const Summary = styled.div`
 export const Title = styled.section`
   h1 {
     font-size: ${({ theme }) => theme.fonts.sizes.sm};
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    ${formatText(2)}
   }
 
   span {
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    ${formatText(1)}
 
     ${({ theme }) => {
       return css`
@@ -85,4 +87,8 @@ export const Description = styled.section`
       color: ${theme.colors.grey};
     `;
   }}
+
+  span:nth-child(2) {
+    ${formatText(1)}
+  }
 `;
