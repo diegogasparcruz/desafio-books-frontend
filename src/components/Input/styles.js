@@ -29,7 +29,7 @@ export const InputWrap = styled.div`
 
   span {
     opacity: 0.5;
-    font-size: 0.75rem;
+    font-size: ${({ theme }) => theme.fonts.sizes.xs};
     line-height: 1rem;
   }
 

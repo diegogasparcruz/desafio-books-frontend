@@ -13,7 +13,7 @@ export const Container = styled.div`
   }
 
   span {
-    font-weight: 300;
+    font-weight: ${({ theme }) => theme.fonts.weight.light};
     font-size: 28px;
     line-height: 40px;
     margin-left: 16px;

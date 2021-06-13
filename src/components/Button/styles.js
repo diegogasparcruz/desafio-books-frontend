@@ -11,7 +11,7 @@ export const Button = styled.button`
         border: 1px solid ${rgba(`${theme.colors.greyDark}`, 0.2)};
         border-radius: 50%;
         background: transparent;
-        border-radius: 1rem;
+        border-radius: ${theme.fonts.sizes.md};
         display: flex;
         align-items: center;
         justify-content: center;
@@ -21,8 +21,8 @@ export const Button = styled.button`
     return css`
       height: 2.25rem;
       width: ${width ? `${width}px` : '5.3125rem'};
-      font-size: 1rem;
-      font-weight: 500;
+      font-size: ${theme.fonts.sizes.md};
+      font-weight: ${theme.fonts.weight.medium};
       color: ${theme.colors.primary};
       background-color: ${theme.colors.white};
       border-radius: 24px;

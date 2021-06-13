@@ -40,13 +40,13 @@ export const Header = styled.header`
     p {
       display: flex;
       margin-right: 1rem;
-      font-size: 0.75rem;
+      font-size: ${({ theme }) => theme.fonts.sizes.xs};
       line-height: 1rem;
       align-self: center;
       justify-self: end;
 
       span {
-        font-weight: 500;
+        font-weight: ${({ theme }) => theme.fonts.weight.medium};
         margin-left: 0.2rem;
       }
     }
@@ -62,7 +62,7 @@ export const Footer = styled.footer`
 
   span {
     align-self: center;
-    font-size: 0.75rem;
+    font-size: ${({ theme }) => theme.fonts.sizes.xs};
     line-height: 1.25rem;
   }
 

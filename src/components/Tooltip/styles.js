@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 
 export const Container = styled.div`
@@ -10,10 +10,15 @@ export const Container = styled.div`
   position: relative;
 
   span {
-    color: ${({ theme }) => theme.colors.white};
-    font-size: 1rem;
     line-height: 1rem;
-    font-weight: 700;
+
+    ${({ theme }) => {
+      return css`
+        color: ${theme.colors.white};
+        font-size: ${theme.fonts.sizes.md};
+        font-weight: ${theme.fonts.weight.bold};
+      `;
+    }}
 
     &::before {
       content: '';

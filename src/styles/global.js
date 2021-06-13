@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, css } from 'styled-components';
 
 export default createGlobalStyle`
   * {
@@ -6,6 +6,10 @@ export default createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     outline: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   @media (max-width: 1080px) {
@@ -21,11 +25,17 @@ export default createGlobalStyle`
   }
 
   body, input, button {
-    font: 400 1rem "Heebo", sans-serif;
+    ${({ theme }) => {
+      return css`
+        font-weight: ${theme.fonts.weight.regular};
+        font-size: ${theme.fonts.sizes.md};
+        font-family: ${theme.fonts.family};
+      `;
+    }};
   }
 
   h1, h2, h3, h4, h5, h6, strong {
-    font-weight: 500;
+    font-weight: ${({ theme }) => theme.fonts.weight.medium};
   }
 
   button {

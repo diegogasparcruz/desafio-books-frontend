@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 
 export const Overlay = styled.div`
@@ -107,9 +107,14 @@ export const Summary = styled.div`
     }
 
     span {
-      font-size: 0.75rem;
       line-height: 1.25rem;
-      color: ${({ theme }) => theme.colors.violet};
+
+      ${({ theme }) => {
+        return css`
+          font-size: ${theme.fonts.sizes.xs};
+          color: ${theme.colors.violet};
+        `;
+      }}
     }
   }
 
@@ -124,7 +129,7 @@ export const SectionInfo = styled.section`
   margin-top: 2rem;
 
   h3 {
-    font-size: 0.75rem;
+    font-size: ${({ theme }) => theme.fonts.sizes.xs};
     line-height: 1.875rem;
   }
 
@@ -133,14 +138,24 @@ export const SectionInfo = styled.section`
     justify-content: space-between;
 
     span {
-      font-weight: 500;
-      font-size: 0.75rem;
       line-height: 1.25rem;
 
+      ${({ theme }) => {
+        return css`
+          font-weight: ${theme.fonts.weight.medium};
+          font-size: ${theme.fonts.sizes.xs};
+        `;
+      }}
+
       & + span {
-        font-size: 0.75rem;
         line-height: 1.25rem;
-        color: ${({ theme }) => theme.colors.grey};
+
+        ${({ theme }) => {
+          return css`
+            font-size: ${theme.fonts.sizes.xs};
+            color: ${theme.colors.grey};
+          `;
+        }}
       }
     }
   }
@@ -150,7 +165,7 @@ export const SectionReview = styled.section`
   margin-top: 2rem;
 
   h3 {
-    font-size: 0.75rem;
+    font-size: ${({ theme }) => theme.fonts.sizes.xs};
     line-height: 1.875rem;
   }
 
@@ -161,10 +176,15 @@ export const SectionReview = styled.section`
   }
 
   p {
-    font-size: 0.75rem;
     line-height: 1.25rem;
     text-align: justify;
-    color: ${({ theme }) => theme.colors.grey};
+
+    ${({ theme }) => {
+      return css`
+        font-size: ${theme.fonts.sizes.xs};
+        color: ${theme.colors.grey};
+      `;
+    }}
   }
 
   @media (min-width: 500px) {

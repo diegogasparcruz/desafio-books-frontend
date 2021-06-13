@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 
 export const Container = styled.div`
@@ -9,9 +9,12 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns: 113px 1fr;
 
-  background: ${({ theme }) => theme.colors.white};
-  box-shadow: 0px 6px 24px
-    ${({ theme }) => rgba(theme.colors.darkMagento, 0.13)};
+  ${({ theme }) => {
+    return css`
+      background: ${theme.colors.white};
+      box-shadow: 0px 6px 24px ${rgba(theme.colors.darkMagento, 0.13)};
+    `;
+  }}
 
   border-radius: 0.25rem;
   cursor: pointer;
@@ -48,7 +51,7 @@ export const Summary = styled.div`
 
 export const Title = styled.section`
   h1 {
-    font-size: 0.875rem;
+    font-size: ${({ theme }) => theme.fonts.sizes.sm};
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -57,13 +60,18 @@ export const Title = styled.section`
   }
 
   span {
-    font-size: 0.75rem;
-    color: ${({ theme }) => theme.colors.violet};
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
     overflow: hidden;
+
+    ${({ theme }) => {
+      return css`
+        font-size: ${theme.fonts.sizes.xs};
+        color: ${theme.colors.violet};
+      `;
+    }}
   }
 `;
 
@@ -71,6 +79,10 @@ export const Description = styled.section`
   display: grid;
   grid-template-rows: 1fr;
 
-  font-size: 0.75rem;
-  color: ${({ theme }) => theme.colors.grey};
+  ${({ theme }) => {
+    return css`
+      font-size: ${theme.fonts.sizes.xs};
+      color: ${theme.colors.grey};
+    `;
+  }}
 `;
