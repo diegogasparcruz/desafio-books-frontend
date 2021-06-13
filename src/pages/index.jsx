@@ -91,6 +91,14 @@ export const getServerSideProps = async ctx => {
       },
     };
   } catch (err) {
+    if (err.response.status === 401) {
+      return {
+        redirect: {
+          destination: '/login?sessionExpiration=true',
+          permantent: false,
+        },
+      };
+    }
     return {
       redirect: {
         destination: '/logout',

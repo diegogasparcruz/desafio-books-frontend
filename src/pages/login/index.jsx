@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../../hooks/useAuth';
+import { AUTH_TOKEN } from '../../utils/constants';
 
 import { Input } from '../../components/Input';
 import { Logo } from '../../components/Logo';
@@ -9,9 +10,11 @@ import { Button } from '../../components/Button';
 
 import { Container } from './styles';
 
-export default function Login() {
+export default function Login({ sessionExpiration }) {
   const { register, handleSubmit } = useForm();
-  const { signIn, error, loading } = useAuth();
+  const { signIn, error, loading, handleSessionExpiration } = useAuth();
+
+  handleSessionExpiration(sessionExpiration);
 
   async function handleSignIn(data) {
     await signIn(data);
@@ -41,3 +44,22 @@ export default function Login() {
     </Container>
   );
 }
+
+export const getServerSideProps = async ctx => {
+  const { [AUTH_TOKEN]: token } = parseCookies(ctx);
+
+  if (token && !ctx.query.sessionExpiration) {
+    return {
+      redirect: {
+        destination: '/',
+        permantent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      sessionExpiration: ctx.query.sessionExpiration,
+    },
+  };
+};
