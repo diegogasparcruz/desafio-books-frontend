@@ -1,4 +1,15 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { rgba } from 'polished';
+
+const formatText = numberLine => {
+  return css`
+    display: -webkit-box;
+    -webkit-line-clamp: ${numberLine};
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  `;
+};
 
 export const Container = styled.div`
   max-width: 288px;
@@ -8,14 +19,20 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns: 113px 1fr;
 
-  background: #ffffff;
-  box-shadow: 0px 6px 24px rgba(84, 16, 95, 0.13);
+  ${({ theme }) => {
+    return css`
+      background: ${theme.colors.white};
+      box-shadow: 0px 6px 24px ${rgba(theme.colors.darkMagento, 0.13)};
+    `;
+  }}
+
   border-radius: 0.25rem;
   cursor: pointer;
   transition: box-shadow 0.2s;
 
   &:hover {
-    box-shadow: 0px 16px 80px rgba(84, 16, 95, 0.32);
+    box-shadow: 0px 16px 80px
+      ${({ theme }) => rgba(theme.colors.darkMagento, 0.32)};
   }
 `;
 
@@ -30,7 +47,9 @@ export const Image = styled.div`
     background-image: url(${({ imageUrl }) => imageUrl || 'image-unknown.svg'});
     background-position: center;
     background-size: cover;
-    filter: drop-shadow(0px 6px 9px rgba(0, 0, 0, 0.15));
+    filter: drop-shadow(
+      0px 6px 9px ${({ theme }) => rgba(theme.colors.black, 0.32)}
+    );
   }
 `;
 
@@ -42,22 +61,19 @@ export const Summary = styled.div`
 
 export const Title = styled.section`
   h1 {
-    font-size: 0.875rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    font-size: ${({ theme }) => theme.fonts.sizes.sm};
+    ${formatText(2)}
   }
 
   span {
-    font-size: 0.75rem;
-    color: #ab2680;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    ${formatText(1)}
+
+    ${({ theme }) => {
+      return css`
+        font-size: ${theme.fonts.sizes.xs};
+        color: ${theme.colors.violet};
+      `;
+    }}
   }
 `;
 
@@ -65,6 +81,14 @@ export const Description = styled.section`
   display: grid;
   grid-template-rows: 1fr;
 
-  font-size: 0.75rem;
-  color: #999999;
+  ${({ theme }) => {
+    return css`
+      font-size: ${theme.fonts.sizes.xs};
+      color: ${theme.colors.grey};
+    `;
+  }}
+
+  span:nth-child(2) {
+    ${formatText(1)}
+  }
 `;

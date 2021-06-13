@@ -15,7 +15,7 @@ export function Card({ book, onClick }) {
         </Title>
         <Description>
           <span>{book.pageCount} páginas</span>
-          <span>Editora {book.publisher}</span>
+          <span title={book.publisher}>Editora {book.publisher}</span>
           <span>Publicado em {book.published}</span>
         </Description>
       </Summary>

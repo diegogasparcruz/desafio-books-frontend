@@ -35,11 +35,13 @@ export const Container = styled.div`
     left: 0;
     top: 0;
     margin: 0.25rem;
-    border: 0.25rem solid ${({ color }) => (color ? color : '#b22e6f')};
+    border: 0.25rem solid
+      ${({ color, theme }) => (color ? color : theme.colors.primary)};
     border-radius: 50%;
     animation: ${ring} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: ${({ color }) => (color ? color : '#b22e6f')} transparent
-      transparent transparent;
+    border-color: ${({ color, theme }) =>
+        color ? color : theme.colors.primary}
+      transparent transparent transparent;
   }
   div:nth-child(1) {
     animation-delay: -0.45s;

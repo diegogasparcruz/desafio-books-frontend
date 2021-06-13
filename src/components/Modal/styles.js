@@ -1,7 +1,8 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { rgba } from 'polished';
 
 export const Overlay = styled.div`
-  background: rgba(0, 0, 0, 0.4);
+  background: ${({ theme }) => rgba(theme.colors.black, 0.4)};
   backdrop-filter: blur(2px);
   position: fixed;
   top: 0;
@@ -20,7 +21,7 @@ export const CloseModal = styled.div`
   padding: 1rem;
 
   button {
-    background: #fff;
+    background: ${({ theme }) => theme.colors.white};
   }
 `;
 
@@ -38,8 +39,8 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  background: #ffffff;
-  box-shadow: 0px 16px 80px rgba(0, 0, 0, 0.32);
+  background: ${({ theme }) => theme.colors.white};
+  box-shadow: 0px 16px 80px ${({ theme }) => rgba(theme.colors.black, 0.32)};
   border-radius: 4px;
   max-width: 768px;
   width: 100%;
@@ -63,7 +64,9 @@ export const Image = styled.div`
   width: 100%;
   height: 350px;
   padding-bottom: 1.5rem;
-  filter: drop-shadow(0px 6px 9px rgba(0, 0, 0, 0.15));
+  filter: drop-shadow(
+    0px 6px 9px ${({ theme }) => rgba(theme.colors.black, 0.15)}
+  );
 
   display: flex;
   justify-content: center;
@@ -104,9 +107,14 @@ export const Summary = styled.div`
     }
 
     span {
-      font-size: 0.75rem;
       line-height: 1.25rem;
-      color: #ab2680;
+
+      ${({ theme }) => {
+        return css`
+          font-size: ${theme.fonts.sizes.xs};
+          color: ${theme.colors.violet};
+        `;
+      }}
     }
   }
 
@@ -121,7 +129,7 @@ export const SectionInfo = styled.section`
   margin-top: 2rem;
 
   h3 {
-    font-size: 0.75rem;
+    font-size: ${({ theme }) => theme.fonts.sizes.xs};
     line-height: 1.875rem;
   }
 
@@ -130,14 +138,24 @@ export const SectionInfo = styled.section`
     justify-content: space-between;
 
     span {
-      font-weight: 500;
-      font-size: 0.75rem;
       line-height: 1.25rem;
 
+      ${({ theme }) => {
+        return css`
+          font-weight: ${theme.fonts.weight.medium};
+          font-size: ${theme.fonts.sizes.xs};
+        `;
+      }}
+
       & + span {
-        font-size: 0.75rem;
         line-height: 1.25rem;
-        color: #999999;
+
+        ${({ theme }) => {
+          return css`
+            font-size: ${theme.fonts.sizes.xs};
+            color: ${theme.colors.grey};
+          `;
+        }}
       }
     }
   }
@@ -147,7 +165,7 @@ export const SectionReview = styled.section`
   margin-top: 2rem;
 
   h3 {
-    font-size: 0.75rem;
+    font-size: ${({ theme }) => theme.fonts.sizes.xs};
     line-height: 1.875rem;
   }
 
@@ -158,10 +176,15 @@ export const SectionReview = styled.section`
   }
 
   p {
-    font-size: 0.75rem;
     line-height: 1.25rem;
     text-align: justify;
-    color: #999999;
+
+    ${({ theme }) => {
+      return css`
+        font-size: ${theme.fonts.sizes.xs};
+        color: ${theme.colors.grey};
+      `;
+    }}
   }
 
   @media (min-width: 500px) {

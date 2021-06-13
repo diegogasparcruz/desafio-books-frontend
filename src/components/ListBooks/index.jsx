@@ -5,7 +5,7 @@ import { Container } from './styles';
 
 export function ListBooks({ books, loading, onClick }) {
   return (
-    <Container loading={loading}>
+    <Container isLoading={loading}>
       {books.map(book => (
         <Card key={book.id} book={book} onClick={() => onClick(book)} />
       ))}

@@ -24,7 +24,7 @@ export default function Login({ sessionExpiration }) {
   }
 
   return (
-    <Container loading={loadingRefresh}>
+    <Container isLoading={loadingRefresh}>
       <Head>
         <title>Ioasys Books | Login</title>
       </Head>

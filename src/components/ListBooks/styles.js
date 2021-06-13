@@ -5,7 +5,7 @@ export const Container = styled.main`
   grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
   gap: 1rem;
   position: relative;
-  opacity: ${({ loading }) => (loading ? '0.4' : '1')};
+  opacity: ${({ isLoading }) => (isLoading ? '0.4' : '1')};
 
   div {
     justify-self: center;
