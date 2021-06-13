@@ -1,17 +1,16 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 
 export const Button = styled.button`
-  ${({ outline, width }) => {
+  ${({ outline, width, theme }) => {
     if (outline) {
-      return `
+      return css`
         width: ${width ? `${width}px` : '2rem'};
-        height:  ${width ? `${width}px` : '2rem'};
+        height: ${width ? `${width}px` : '2rem'};
         background: transparent;
-        border: 1px solid ${rgba('#333333', 0.2)};
+        border: 1px solid ${rgba(`${theme.colors.greyDark}`, 0.2)};
         border-radius: 50%;
         background: transparent;
-        border: 1px solid rgba(3, 3, 3, 0.2);
         border-radius: 1rem;
         display: flex;
         align-items: center;
@@ -19,13 +18,13 @@ export const Button = styled.button`
         transition: opacity 0.2s;
       `;
     }
-    return `
+    return css`
       height: 2.25rem;
       width: ${width ? `${width}px` : '5.3125rem'};
       font-size: 1rem;
       font-weight: 500;
-      color: #B22E6F;
-      background-color: #ffffff;
+      color: ${theme.colors.primary};
+      background-color: ${theme.colors.white};
       border-radius: 24px;
       border: none;
     `;

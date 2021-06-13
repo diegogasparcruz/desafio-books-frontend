@@ -2,9 +2,9 @@ import React from 'react';
 
 import { Container } from './styles';
 
-export function Logo({ themeColor }) {
+export function Logo({ color }) {
   return (
-    <Container themeColor={themeColor}>
+    <Container color={color}>
       <svg
         width="105"
         height="36"

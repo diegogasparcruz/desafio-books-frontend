@@ -25,7 +25,7 @@ export const Container = styled.div`
         height: 2.25rem;
         border-radius: 2.75rem;
         border: none;
-        color: #b22e6f;
+        color: ${({ theme }) => theme.colors.primary};
         font-weight: 500;
         transition: filter 0.2s;
 

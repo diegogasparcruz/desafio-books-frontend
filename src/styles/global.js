@@ -38,7 +38,7 @@ export default createGlobalStyle`
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: #B22E6F;
+    background-color: ${({ theme }) => theme.colors.primary};
     border-radius: 30px;
   }
 

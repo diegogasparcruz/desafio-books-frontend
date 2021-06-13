@@ -32,7 +32,7 @@ export default function Home({ books, totalPages }) {
       </Head>
       <Content>
         <Header>
-          <Logo themeColor="dark" />
+          <Logo color="dark" />
           <p>
             Bem vindo,<span> {user?.name}!</span>
           </p>
