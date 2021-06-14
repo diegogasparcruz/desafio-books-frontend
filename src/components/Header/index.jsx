@@ -1,9 +1,11 @@
+import PropTypes from 'prop-types';
+
 import { Button } from '../Button';
 import { Logo } from '../Logo';
 
 import * as Style from './styles';
 
-export function Header({ user, logout }) {
+function Header({ user, logout }) {
   return (
     <Style.Header>
       <Logo color="dark" />
@@ -16,3 +18,16 @@ export function Header({ user, logout }) {
     </Style.Header>
   );
 }
+
+Header.propTypes = {
+  user: PropTypes.shape({
+    name: PropTypes.string,
+  }),
+  logout: PropTypes.func,
+};
+
+Header.defaultProps = {
+  user: null,
+  logout: () => {},
+};
+export { Header };
