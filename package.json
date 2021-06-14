@@ -26,6 +26,7 @@
     "@storybook/addon-essentials": "^6.2.9",
     "@storybook/addon-links": "^6.2.9",
     "@storybook/react": "^6.2.9",
+    "@svgr/webpack": "^5.5.0",
     "babel-loader": "^8.2.2",
     "eslint": "^7.28.0",
     "eslint-config-airbnb": "^18.2.1",
