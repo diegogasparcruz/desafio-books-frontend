@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { parseCookies } from 'nookies';
 import { useAuth } from 'hooks/useAuth';
@@ -16,7 +16,9 @@ export default function Login({ sessionExpiration }) {
   const { signIn, error, loading, handleSessionExpiration } = useAuth();
   const loadingRefresh = loading && sessionExpiration;
 
-  handleSessionExpiration(sessionExpiration);
+  useEffect(() => {
+    handleSessionExpiration(sessionExpiration);
+  }, []);
 
   async function handleSignIn(data) {
     await signIn(data);
