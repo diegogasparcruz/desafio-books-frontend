@@ -29,7 +29,7 @@ export function AuthProvider({ children }) {
         setLoading(false);
       });
     }
-  }, []);
+  }, [sessionExpiration]);
 
   async function signIn({ email, password }) {
     setLoading(true);
