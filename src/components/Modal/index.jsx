@@ -1,4 +1,6 @@
-import { useBook } from '../../hooks/useBook';
+import PropTypes from 'prop-types';
+
+import { useBook } from 'hooks/useBook';
 import { Button } from '../Button';
 import {
   Container,
@@ -10,15 +12,16 @@ import {
   SectionInfo,
   SectionReview,
 } from './styles';
+import { Icon } from 'components/Icon';
 
-export function Modal({ book }) {
+function Modal({ book }) {
   const { closeModal } = useBook();
 
   return (
     <Overlay>
       <CloseModal>
         <Button outline onClick={closeModal}>
-          <img src="/icons/close.svg" alt="Fechar modal" />
+          <Icon name="close" />
         </Button>
       </CloseModal>
 
@@ -34,7 +37,7 @@ export function Modal({ book }) {
           <Summary>
             <header>
               <h1 title={book.title}>{book.title}</h1>
-              <span>{book.authors.join(', ')}</span>
+              <span>{book.authors}</span>
             </header>
 
             <SectionInfo>
@@ -73,7 +76,7 @@ export function Modal({ book }) {
               <h3>RESENHA DA EDITORA</h3>
 
               <p>
-                <img src="/icons/quote.svg" alt="Citação" />
+                <Icon name="quote" />
                 {book.description}
               </p>
             </SectionReview>
@@ -83,3 +86,20 @@ export function Modal({ book }) {
     </Overlay>
   );
 }
+
+Modal.propTypes = {
+  book: PropTypes.shape({
+    imageUrl: PropTypes.string,
+    authors: PropTypes.string,
+    pageCount: PropTypes.number,
+    publisher: PropTypes.string,
+    published: PropTypes.number,
+    language: PropTypes.string,
+    title: PropTypes.string,
+    isbn10: PropTypes.string,
+    isbn13: PropTypes.string,
+    description: PropTypes.string,
+  }),
+};
+
+export { Modal };

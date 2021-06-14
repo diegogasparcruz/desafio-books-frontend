@@ -4,7 +4,7 @@ import {
   USER_TOKEN,
   AUTH_REFRESH,
   MAX_AGE_COOKIE,
-} from '../utils/constants';
+} from 'utils/constants';
 import { api } from './api';
 
 export async function signIn({ email, password }) {

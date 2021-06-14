@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Tooltip } from '../Tooltip';
 
 import { Container, InputWrap } from './styles';
 
-export const Input = React.forwardRef(
+const Input = React.forwardRef(
   ({ children, label, type, name, error, ...props }, ref) => {
     return (
       <>
@@ -20,3 +21,17 @@ export const Input = React.forwardRef(
     );
   }
 );
+
+Input.propTypes = {
+  children: PropTypes.element,
+  label: PropTypes.string,
+  type: PropTypes.string,
+  name: PropTypes.string,
+  error: PropTypes.string,
+};
+
+Input.defaultProps = {
+  type: 'text',
+};
+
+export { Input };

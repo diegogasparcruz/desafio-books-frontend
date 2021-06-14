@@ -1,17 +1,17 @@
-import Head from 'next/head';
 import { parseCookies } from 'nookies';
-import { getAPICliet } from '../services/api';
-import { useAuth } from '../hooks/useAuth';
-import { useBook } from '../hooks/useBook';
-import { AUTH_TOKEN } from '../utils/constants';
-import { verifyPage } from '../utils/verifyPage';
+import { getAPICliet } from 'services/api';
+import { useAuth } from 'hooks/useAuth';
+import { useBook } from 'hooks/useBook';
+import { AUTH_TOKEN } from 'utils/constants';
+import { verifyPage } from 'utils/verifyPage';
 
-import { Button } from '../components/Button';
-import { ListBooks } from '../components/ListBooks';
-import { Modal } from '../components/Modal';
-import { Header } from '../components/Header';
+import { Button } from 'components/Button';
+import { ListBooks } from 'components/ListBooks';
+import { Modal } from 'components/Modal';
+import { Header } from 'components/Header';
 
 import { Container, Content, Footer } from '../styles/pages/Home';
+import { Icon } from 'components/Icon';
 
 export default function Home({ books, totalPages }) {
   const { user, logout } = useAuth();
@@ -34,13 +34,13 @@ export default function Home({ books, totalPages }) {
 
         <Footer>
           <Button onClick={previousPage} disabled={page === 1} outline>
-            <img src="icons/arrow-left.svg" alt="Previous" />
+            <Icon name="arrow-left" />
           </Button>
           <span>
             Página {page} de {totalPages}
           </span>
           <Button onClick={nextPage} disabled={page >= totalPages} outline>
-            <img src="icons/arrow-right.svg" alt="Next" />
+            <Icon name="arrow-right" />
           </Button>
         </Footer>
       </Content>
@@ -70,7 +70,10 @@ export const getServerSideProps = async ctx => {
     const response = await apiClient.get(
       `/books?page=${page}&amount=${limitItens}`
     );
-    const books = response.data.data;
+    const books = response.data.data.map(book => ({
+      ...book,
+      authors: book.authors.join(', '),
+    }));
     const totalPages = Math.ceil(response.data.totalPages);
 
     return {

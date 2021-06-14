@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import Router from 'next/router';
 
-import * as authService from '../services/authService';
+import * as authService from 'services/authService';
 
 export const AuthContext = createContext({});
 

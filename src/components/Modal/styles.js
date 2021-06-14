@@ -169,10 +169,8 @@ export const SectionReview = styled.section`
     line-height: 1.875rem;
   }
 
-  img {
-    width: 1.09875rem;
-    height: 0.88375rem;
-    padding-right: 5px;
+  svg {
+    margin-right: 7px;
   }
 
   p {

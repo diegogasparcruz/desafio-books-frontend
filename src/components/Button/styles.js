@@ -41,5 +41,9 @@ export const Button = styled.button`
 
   :disabled {
     cursor: not-allowed;
+
+    svg {
+      opacity: 0.4;
+    }
   }
 `;
