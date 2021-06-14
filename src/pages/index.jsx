@@ -70,7 +70,10 @@ export const getServerSideProps = async ctx => {
     const response = await apiClient.get(
       `/books?page=${page}&amount=${limitItens}`
     );
-    const books = response.data.data;
+    const books = response.data.data.map(book => ({
+      ...book,
+      authors: book.authors.join(', '),
+    }));
     const totalPages = Math.ceil(response.data.totalPages);
 
     return {

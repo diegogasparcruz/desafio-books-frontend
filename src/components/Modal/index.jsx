@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import { useBook } from '../../hooks/useBook';
 import { Button } from '../Button';
 import {
@@ -11,7 +13,7 @@ import {
   SectionReview,
 } from './styles';
 
-export function Modal({ book }) {
+function Modal({ book }) {
   const { closeModal } = useBook();
 
   return (
@@ -34,7 +36,7 @@ export function Modal({ book }) {
           <Summary>
             <header>
               <h1 title={book.title}>{book.title}</h1>
-              <span>{book.authors.join(', ')}</span>
+              <span>{book.authors}</span>
             </header>
 
             <SectionInfo>
@@ -83,3 +85,20 @@ export function Modal({ book }) {
     </Overlay>
   );
 }
+
+Modal.propTypes = {
+  book: PropTypes.shape({
+    imageUrl: PropTypes.string,
+    authors: PropTypes.string,
+    pageCount: PropTypes.number,
+    publisher: PropTypes.string,
+    published: PropTypes.number,
+    language: PropTypes.string,
+    title: PropTypes.string,
+    isbn10: PropTypes.string,
+    isbn13: PropTypes.string,
+    description: PropTypes.string,
+  }),
+};
+
+export { Modal };
