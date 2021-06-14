@@ -1,4 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { rgba } from 'polished';
+import { limitText } from 'utils/limitText';
 
 export const Container = styled.div`
   max-width: 288px;
@@ -8,14 +10,20 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns: 113px 1fr;
 
-  background: #ffffff;
-  box-shadow: 0px 6px 24px rgba(84, 16, 95, 0.13);
+  ${({ theme }) => {
+    return css`
+      background: ${theme.colors.white};
+      box-shadow: 0px 6px 24px ${rgba(theme.colors.darkMagento, 0.13)};
+    `;
+  }}
+
   border-radius: 0.25rem;
   cursor: pointer;
   transition: box-shadow 0.2s;
 
   &:hover {
-    box-shadow: 0px 16px 80px rgba(84, 16, 95, 0.32);
+    box-shadow: 0px 16px 80px
+      ${({ theme }) => rgba(theme.colors.darkMagento, 0.32)};
   }
 `;
 
@@ -24,26 +32,39 @@ export const Image = styled.div`
   align-items: center;
   justify-content: center;
 
-  img {
+  .image {
     width: 81px;
     height: 122px;
+    background-image: url(${({ imageUrl }) => imageUrl || 'image-unknown.svg'});
+    background-position: center;
+    background-size: cover;
+    filter: drop-shadow(
+      0px 6px 9px ${({ theme }) => rgba(theme.colors.black, 0.32)}
+    );
   }
 `;
 
 export const Summary = styled.div`
-  width: 100%;
+  width: 160px;
   display: grid;
   align-items: center;
 `;
 
 export const Title = styled.section`
   h1 {
-    font-size: 0.875rem;
+    font-size: ${({ theme }) => theme.fonts.sizes.sm};
+    ${limitText(2)}
   }
 
   span {
-    font-size: 0.75rem;
-    color: #ab2680;
+    ${limitText(1)}
+
+    ${({ theme }) => {
+      return css`
+        font-size: ${theme.fonts.sizes.xs};
+        color: ${theme.colors.violet};
+      `;
+    }}
   }
 `;
 
@@ -51,6 +72,14 @@ export const Description = styled.section`
   display: grid;
   grid-template-rows: 1fr;
 
-  font-size: 0.75rem;
-  color: #999999;
+  ${({ theme }) => {
+    return css`
+      font-size: ${theme.fonts.sizes.xs};
+      color: ${theme.colors.grey};
+    `;
+  }}
+
+  span:nth-child(2) {
+    ${limitText(1)}
+  }
 `;

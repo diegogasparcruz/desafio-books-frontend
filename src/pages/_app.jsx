@@ -1,13 +1,27 @@
-import { AuthProvider } from '../contexts/AuthContext';
+import { ThemeProvider } from 'styled-components';
+import { AuthProvider } from 'contexts/AuthContext';
+import { BookProvider } from 'contexts/BookContext';
 
-import GlobalStyle from '../styles/global';
+import { HeadSeo } from 'components/HeadSeo';
+
+import { theme } from 'styles/theme';
+
+import GlobalStyle from 'styles/global';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <AuthProvider>
-      <Component {...pageProps} />
-      <GlobalStyle />
-    </AuthProvider>
+    <ThemeProvider theme={theme}>
+      <AuthProvider>
+        <BookProvider>
+          <HeadSeo
+            title={pageProps.title}
+            metaDescription={pageProps.metaDescription}
+          />
+          <Component {...pageProps} />
+          <GlobalStyle />
+        </BookProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

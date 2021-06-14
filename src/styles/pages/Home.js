@@ -18,57 +18,6 @@ export const Content = styled.div`
   flex-direction: column;
 `;
 
-export const Header = styled.header`
-  width: 100%;
-  margin: 2.5rem 0;
-
-  display: grid;
-  grid-template-columns: 1fr 2rem;
-
-  button {
-    align-self: center;
-    justify-self: end;
-  }
-
-  p {
-    display: none;
-  }
-
-  @media (min-width: 420px) {
-    grid-template-columns: 1fr 1fr 2rem;
-
-    p {
-      display: flex;
-      margin-right: 1rem;
-      font-size: 0.75rem;
-      line-height: 1rem;
-      align-self: center;
-      justify-self: end;
-
-      span {
-        font-weight: 500;
-        margin-left: 0.2rem;
-      }
-    }
-  }
-`;
-
-export const Main = styled.main`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
-  gap: 1rem;
-
-  div {
-    justify-self: center;
-  }
-
-  @media (min-width: 878px) {
-    div {
-      justify-self: normal;
-    }
-  }
-`;
-
 export const Footer = styled.footer`
   display: flex;
   flex-direction: row;
@@ -78,7 +27,7 @@ export const Footer = styled.footer`
 
   span {
     align-self: center;
-    font-size: 0.75rem;
+    font-size: ${({ theme }) => theme.fonts.sizes.xs};
     line-height: 1.25rem;
   }
 

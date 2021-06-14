@@ -1,180 +1,61 @@
-import { useContext } from 'react';
-import Head from 'next/head';
-import Router from 'next/router';
 import { parseCookies } from 'nookies';
-import * as authService from '../services/authService';
-import { AuthContext } from '../contexts/AuthContext';
-import { AUTH_TOKEN } from '../utils/constants';
+import { getAPICliet } from 'services/api';
+import { useAuth } from 'hooks/useAuth';
+import { useBook } from 'hooks/useBook';
+import { AUTH_TOKEN } from 'utils/constants';
+import { verifyPage } from 'utils/verifyPage';
 
-import { Logo } from '../components/Logo';
-import { Button } from '../components/Button';
-import { Card } from '../components/Card';
+import { Button } from 'components/Button';
+import { ListBooks } from 'components/ListBooks';
+import { Modal } from 'components/Modal';
+import { Header } from 'components/Header';
 
-import { Container, Content, Header, Main, Footer } from '../styles/pages/Home';
+import { Container, Content, Footer } from '../styles/pages/Home';
+import { Icon } from 'components/Icon';
 
-export default function Home() {
-  const { user } = useContext(AuthContext);
-
-  function logout() {
-    authService.logout();
-    Router.push('/login');
-  }
+export default function Home({ books, totalPages }) {
+  const { user, logout } = useAuth();
+  const {
+    page,
+    nextPage,
+    previousPage,
+    loading,
+    isShowModal,
+    openModal,
+    book,
+  } = useBook();
 
   return (
     <Container>
-      <Head>
-        <title>Ioasys Books | Home</title>
-      </Head>
       <Content>
-        <Header>
-          <Logo themeColor="dark" />
-          <p>
-            Bem vindo,<span> {user?.name}!</span>
-          </p>
-          <Button onClick={logout}>
-            <img src="icons/logout.svg" alt="Logout" />
-          </Button>
-        </Header>
+        <Header user={user} logout={logout} />
 
-        <Main>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-          <Card
-            title="A dolorem itaque"
-            authors="Yango Moreira Filho"
-            pageCount="1042"
-            publisher="Pereira - Carvalho"
-            published="1998"
-          >
-            <img
-              src="https://files-books.ioasys.com.br/Book-9.jpg"
-              alt="Livro"
-            />
-          </Card>
-        </Main>
+        <ListBooks books={books} onClick={openModal} loading={loading} />
 
         <Footer>
-          <Button>
-            <img src="icons/arrow-left.svg" alt="Previous" />
+          <Button onClick={previousPage} disabled={page === 1} outline>
+            <Icon name="arrow-left" />
           </Button>
-          <span>Página 1 de 100</span>
-          <Button>
-            <img src="icons/arrow-right.svg" alt="Next" />
+          <span>
+            Página {page} de {totalPages}
+          </span>
+          <Button onClick={nextPage} disabled={page >= totalPages} outline>
+            <Icon name="arrow-right" />
           </Button>
         </Footer>
       </Content>
+
+      {isShowModal && <Modal book={book} />}
     </Container>
   );
 }
 
 export const getServerSideProps = async ctx => {
   const { [AUTH_TOKEN]: token } = parseCookies(ctx);
+
+  const apiClient = getAPICliet(ctx);
+  const limitItens = 12;
+  const page = verifyPage(ctx.query.page);
 
   if (!token) {
     return {
@@ -185,7 +66,38 @@ export const getServerSideProps = async ctx => {
     };
   }
 
-  return {
-    props: {},
-  };
+  try {
+    const response = await apiClient.get(
+      `/books?page=${page}&amount=${limitItens}`
+    );
+    const books = response.data.data.map(book => ({
+      ...book,
+      authors: book.authors.join(', '),
+    }));
+    const totalPages = Math.ceil(response.data.totalPages);
+
+    return {
+      props: {
+        books,
+        totalPages,
+        title: 'Ioasys Books | Home',
+        metaDescription: 'Veja todos os livros da nossa coleção',
+      },
+    };
+  } catch (err) {
+    if (err.response.status === 401) {
+      return {
+        redirect: {
+          destination: '/login?sessionExpiration=true',
+          permantent: false,
+        },
+      };
+    }
+    return {
+      redirect: {
+        destination: '/logout',
+        permantent: false,
+      },
+    };
+  }
 };

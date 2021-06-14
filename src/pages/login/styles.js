@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   background-image: url('bg-login.png');
@@ -7,6 +7,8 @@ export const Container = styled.div`
   background-size: cover;
   background-attachment: fixed;
   height: 100vh;
+
+  opacity: ${({ isLoading }) => (isLoading ? '0.6' : '1')};
 
   display: flex;
   flex-direction: column;
@@ -23,9 +25,14 @@ export const Container = styled.div`
         height: 2.25rem;
         border-radius: 2.75rem;
         border: none;
-        color: #b22e6f;
-        font-weight: 500;
         transition: filter 0.2s;
+
+        ${({ theme }) => {
+          return css`
+            color: ${theme.colors.primary};
+            font-weight: ${theme.fonts.weight.medium};
+          `;
+        }}
 
         &:hover {
           filter: brightness(0.9);

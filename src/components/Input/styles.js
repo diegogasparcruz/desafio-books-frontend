@@ -1,12 +1,13 @@
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 export const Container = styled.div`
   position: relative;
   max-width: 23rem;
   width: 100%;
   height: 3.75rem;
-  background: rgba(0, 0, 0, 0.32);
-  color: #fff;
+  background: ${({ theme }) => rgba(theme.colors.black, 0.32)};
+  color: ${({ theme }) => theme.colors.white};
   padding: 0 0.813rem;
   border-radius: 0.25rem;
 
@@ -28,7 +29,7 @@ export const InputWrap = styled.div`
 
   span {
     opacity: 0.5;
-    font-size: 0.75rem;
+    font-size: ${({ theme }) => theme.fonts.sizes.xs};
     line-height: 1rem;
   }
 
@@ -36,6 +37,14 @@ export const InputWrap = styled.div`
     width: 100%;
     background: transparent;
     border: none;
-    color: #fff;
+    color: ${({ theme }) => theme.colors.white};
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+      transition: background-color 5000s ease-in-out 0s;
+      -webkit-text-fill-color: ${({ theme }) => theme.colors.white} !important;
+    }
   }
 `;

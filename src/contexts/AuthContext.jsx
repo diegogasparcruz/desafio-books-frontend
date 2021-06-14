@@ -1,15 +1,15 @@
 import { createContext, useEffect, useState } from 'react';
 import Router from 'next/router';
-import { setCookie } from 'nookies';
 
-import * as authService from '../services/authService';
-import { api } from '../services/api';
-import { AUTH_TOKEN, USER_TOKEN } from '../utils/constants';
+import * as authService from 'services/authService';
 
 export const AuthContext = createContext({});
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [sessionExpiration, setSessionExpiration] = useState(false);
 
   useEffect(() => {
     const response = authService.getUser();
@@ -19,30 +19,46 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  async function signIn({ email, password }) {
-    try {
-      const { data, headers } = await authService.signIn({ email, password });
-
-      setCookie(undefined, AUTH_TOKEN, headers.authorization, {
-        maxAge: 60 * 60 * 24, // 1 day
+  useEffect(() => {
+    if (sessionExpiration) {
+      setLoading(true);
+      authService.refreshToken().then(response => {
+        if (!response.error) {
+          Router.push('/');
+        }
+        setLoading(false);
       });
-
-      setCookie(undefined, USER_TOKEN, JSON.stringify(data), {
-        maxAge: 60 * 60 * 24, // 1 day
-      });
-
-      api.defaults.headers['Authorization'] = `Bearer ${headers.authorization}`;
-
-      setUser(data);
-
-      Router.push('/');
-    } catch (err) {
-      console.log(err.response);
     }
+  }, []);
+
+  async function signIn({ email, password }) {
+    setLoading(true);
+
+    const response = await authService.signIn({ email, password });
+    setError('');
+
+    if (response.data) {
+      setUser(response.data);
+      Router.push('/');
+    } else {
+      setError(response.error);
+    }
+    setLoading(false);
+  }
+
+  function logout() {
+    authService.logout();
+    Router.push('/login');
+  }
+
+  function handleSessionExpiration(sessionExpiration_) {
+    setSessionExpiration(sessionExpiration_);
   }
 
   return (
-    <AuthContext.Provider value={{ signIn, user }}>
+    <AuthContext.Provider
+      value={{ signIn, logout, user, error, loading, handleSessionExpiration }}
+    >
       {children}
     </AuthContext.Provider>
   );
