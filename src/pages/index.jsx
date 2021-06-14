@@ -11,6 +11,7 @@ import { Modal } from 'components/Modal';
 import { Header } from 'components/Header';
 
 import { Container, Content, Footer } from '../styles/pages/Home';
+import { Icon } from 'components/Icon';
 
 export default function Home({ books, totalPages }) {
   const { user, logout } = useAuth();
@@ -33,13 +34,13 @@ export default function Home({ books, totalPages }) {
 
         <Footer>
           <Button onClick={previousPage} disabled={page === 1} outline>
-            <img src="icons/arrow-left.svg" alt="Previous" />
+            <Icon name="arrow-left" />
           </Button>
           <span>
             Página {page} de {totalPages}
           </span>
           <Button onClick={nextPage} disabled={page >= totalPages} outline>
-            <img src="icons/arrow-right.svg" alt="Next" />
+            <Icon name="arrow-right" />
           </Button>
         </Footer>
       </Content>

@@ -12,6 +12,7 @@ import {
   SectionInfo,
   SectionReview,
 } from './styles';
+import { Icon } from 'components/Icon';
 
 function Modal({ book }) {
   const { closeModal } = useBook();
@@ -20,7 +21,7 @@ function Modal({ book }) {
     <Overlay>
       <CloseModal>
         <Button outline onClick={closeModal}>
-          <img src="/icons/close.svg" alt="Fechar modal" />
+          <Icon name="close" />
         </Button>
       </CloseModal>
 
@@ -75,7 +76,7 @@ function Modal({ book }) {
               <h3>RESENHA DA EDITORA</h3>
 
               <p>
-                <img src="/icons/quote.svg" alt="Citação" />
+                <Icon name="quote" />
                 {book.description}
               </p>
             </SectionReview>

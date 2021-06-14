@@ -1,3 +1,4 @@
+import { Icon } from 'components/Icon';
 import PropTypes from 'prop-types';
 
 import { Button } from '../Button';
@@ -13,7 +14,7 @@ function Header({ user, logout }) {
         Bem vindo,<span> {user?.name}!</span>
       </p>
       <Button onClick={logout} outline>
-        <img src="icons/logout.svg" alt="Logout" />
+        <Icon name="logout" />
       </Button>
     </Style.Header>
   );
