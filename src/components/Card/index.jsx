@@ -1,8 +1,8 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Container, Image, Summary, Title, Description } from './styles';
 
-export function Card({ book, onClick }) {
+function Card({ book, onClick }) {
   return (
     <Container onClick={onClick}>
       <Image imageUrl={book.imageUrl}>
@@ -11,7 +11,7 @@ export function Card({ book, onClick }) {
       <Summary>
         <Title>
           <h1 title={book.title}>{book.title}</h1>
-          <span title={book.authors}>{book.authors.join(', ')}</span>
+          <span title={book.authors}>{book.authors}</span>
         </Title>
         <Description>
           <span>{book.pageCount} páginas</span>
@@ -22,3 +22,17 @@ export function Card({ book, onClick }) {
     </Container>
   );
 }
+
+Card.propTypes = {
+  book: PropTypes.shape({
+    imageUrl: PropTypes.string,
+    authors: PropTypes.string,
+    pageCount: PropTypes.number,
+    publisher: PropTypes.string,
+    published: PropTypes.number,
+    title: PropTypes.string,
+  }),
+  onClick: PropTypes.func,
+};
+
+export { Card };
