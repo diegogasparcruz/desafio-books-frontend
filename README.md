@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="logo" src=".github/preview/logo.svg" width="25%"/>
+  <img alt="logo" src=".github/logo.svg" width="25%"/>
 </div>
 
 ## 🖥 Tecnologies
