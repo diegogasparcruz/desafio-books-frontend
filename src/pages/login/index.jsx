@@ -9,7 +9,7 @@ import { Logo } from 'components/Logo';
 import { Button } from 'components/Button';
 import { Loading } from 'components/Loading';
 
-import { Container } from './styles';
+import { Container } from 'styles/pages/Login';
 
 export default function Login({ sessionExpiration }) {
   const { register, handleSubmit } = useForm();
