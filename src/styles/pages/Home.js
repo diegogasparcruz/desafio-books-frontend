@@ -6,7 +6,10 @@ export const Container = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  height: 100vh;
+
+  @media (min-width: 875px) {
+    height: 100vh;
+  }
 `;
 
 export const Content = styled.div`
