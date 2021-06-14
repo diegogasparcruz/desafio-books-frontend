@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { createContext, useEffect, useState } from 'react';
-import { verifyPage } from '../utils/verifyPage';
+import { verifyPage } from 'utils/verifyPage';
 
 export const BookContext = createContext({});
 

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { useBook } from '../../hooks/useBook';
+import { useBook } from 'hooks/useBook';
 import { Button } from '../Button';
 import {
   Container,

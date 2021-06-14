@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import { limitText } from '../../utils/limitText';
+import { limitText } from 'utils/limitText';
 
 export const Container = styled.div`
   max-width: 288px;

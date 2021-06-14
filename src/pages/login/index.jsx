@@ -1,14 +1,13 @@
 import React from 'react';
-import Head from 'next/head';
 import { useForm } from 'react-hook-form';
 import { parseCookies } from 'nookies';
-import { useAuth } from '../../hooks/useAuth';
-import { AUTH_TOKEN } from '../../utils/constants';
+import { useAuth } from 'hooks/useAuth';
+import { AUTH_TOKEN } from 'utils/constants';
 
-import { Input } from '../../components/Input';
-import { Logo } from '../../components/Logo';
-import { Button } from '../../components/Button';
-import { Loading } from '../../components/Loading';
+import { Input } from 'components/Input';
+import { Logo } from 'components/Logo';
+import { Button } from 'components/Button';
+import { Loading } from 'components/Loading';
 
 import { Container } from './styles';
 

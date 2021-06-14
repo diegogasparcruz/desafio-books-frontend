@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { parseCookies } from 'nookies';
-import { URL_API } from '../utils/constants';
+import { URL_API } from 'utils/constants';
 
 export function getAPICliet(ctx) {
   const { '@ioasys.token': token } = parseCookies(ctx);

@@ -1,15 +1,14 @@
-import Head from 'next/head';
 import { parseCookies } from 'nookies';
-import { getAPICliet } from '../services/api';
-import { useAuth } from '../hooks/useAuth';
-import { useBook } from '../hooks/useBook';
-import { AUTH_TOKEN } from '../utils/constants';
-import { verifyPage } from '../utils/verifyPage';
+import { getAPICliet } from 'services/api';
+import { useAuth } from 'hooks/useAuth';
+import { useBook } from 'hooks/useBook';
+import { AUTH_TOKEN } from 'utils/constants';
+import { verifyPage } from 'utils/verifyPage';
 
-import { Button } from '../components/Button';
-import { ListBooks } from '../components/ListBooks';
-import { Modal } from '../components/Modal';
-import { Header } from '../components/Header';
+import { Button } from 'components/Button';
+import { ListBooks } from 'components/ListBooks';
+import { Modal } from 'components/Modal';
+import { Header } from 'components/Header';
 
 import { Container, Content, Footer } from '../styles/pages/Home';
 
