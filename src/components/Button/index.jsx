@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { Loading } from '../Loading';
 
 import * as Styles from './styles';
 
-export function Button({
+function Button({
   children,
   label,
   type,
@@ -29,3 +31,24 @@ export function Button({
     </Styles.Button>
   );
 }
+
+Button.propTypes = {
+  children: PropTypes.element,
+  label: PropTypes.string,
+  type: PropTypes.string,
+  onClick: PropTypes.func,
+  outline: PropTypes.bool,
+  width: PropTypes.number,
+  disabled: PropTypes.bool,
+  loading: PropTypes.bool,
+};
+
+Button.defaultProps = {
+  type: 'button',
+  outline: false,
+  disabled: false,
+  loading: false,
+  onClick: () => {},
+};
+
+export { Button };
