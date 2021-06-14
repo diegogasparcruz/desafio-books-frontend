@@ -10,7 +10,7 @@ import { ListBooks } from 'components/ListBooks';
 import { Modal } from 'components/Modal';
 import { Header } from 'components/Header';
 
-import { Container, Content, Footer } from '../styles/pages/Home';
+import { Main, Container, Content, Footer } from '../styles/pages/Home';
 import { Icon } from 'components/Icon';
 
 export default function Home({ books, totalPages }) {
@@ -26,27 +26,29 @@ export default function Home({ books, totalPages }) {
   } = useBook();
 
   return (
-    <Container>
-      <Content>
-        <Header user={user} logout={logout} />
+    <Main>
+      <Container>
+        <Content>
+          <Header user={user} logout={logout} />
 
-        <ListBooks books={books} onClick={openModal} loading={loading} />
+          <ListBooks books={books} onClick={openModal} loading={loading} />
 
-        <Footer>
-          <Button onClick={previousPage} disabled={page === 1} outline>
-            <Icon name="arrow-left" />
-          </Button>
-          <span>
-            Página {page} de {totalPages}
-          </span>
-          <Button onClick={nextPage} disabled={page >= totalPages} outline>
-            <Icon name="arrow-right" />
-          </Button>
-        </Footer>
-      </Content>
+          <Footer>
+            <Button onClick={previousPage} disabled={page === 1} outline>
+              <Icon name="arrow-left" />
+            </Button>
+            <span>
+              Página {page} de {totalPages}
+            </span>
+            <Button onClick={nextPage} disabled={page >= totalPages} outline>
+              <Icon name="arrow-right" />
+            </Button>
+          </Footer>
+        </Content>
 
-      {isShowModal && <Modal book={book} />}
-    </Container>
+        {isShowModal && <Modal book={book} />}
+      </Container>
+    </Main>
   );
 }
 
