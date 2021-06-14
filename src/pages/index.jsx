@@ -27,9 +27,6 @@ export default function Home({ books, totalPages }) {
 
   return (
     <Container>
-      <Head>
-        <title>Ioasys Books | Home</title>
-      </Head>
       <Content>
         <Header user={user} logout={logout} />
 
@@ -80,6 +77,8 @@ export const getServerSideProps = async ctx => {
       props: {
         books,
         totalPages,
+        title: 'Ioasys Books | Home',
+        metaDescription: 'Veja todos os livros da nossa coleção',
       },
     };
   } catch (err) {

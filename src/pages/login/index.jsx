@@ -25,10 +25,6 @@ export default function Login({ sessionExpiration }) {
 
   return (
     <Container isLoading={loadingRefresh}>
-      <Head>
-        <title>Ioasys Books | Login</title>
-      </Head>
-
       <main>
         <Logo />
         <form onSubmit={handleSubmit(handleSignIn)}>
@@ -76,6 +72,8 @@ export const getServerSideProps = async ctx => {
   return {
     props: {
       sessionExpiration: !!ctx.query.sessionExpiration,
+      title: 'Ioasys Books | Login',
+      metaDescription: 'Faça login para acessar todos os livros',
     },
   };
 };

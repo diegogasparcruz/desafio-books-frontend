@@ -1,15 +1,6 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-
-const formatText = numberLine => {
-  return css`
-    display: -webkit-box;
-    -webkit-line-clamp: ${numberLine};
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  `;
-};
+import { limitText } from '../../utils/limitText';
 
 export const Container = styled.div`
   max-width: 288px;
@@ -62,11 +53,11 @@ export const Summary = styled.div`
 export const Title = styled.section`
   h1 {
     font-size: ${({ theme }) => theme.fonts.sizes.sm};
-    ${formatText(2)}
+    ${limitText(2)}
   }
 
   span {
-    ${formatText(1)}
+    ${limitText(1)}
 
     ${({ theme }) => {
       return css`
@@ -89,6 +80,6 @@ export const Description = styled.section`
   }}
 
   span:nth-child(2) {
-    ${formatText(1)}
+    ${limitText(1)}
   }
 `;
