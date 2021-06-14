@@ -2,7 +2,7 @@
   <img alt="logo" src=".github/logo.svg" width="25%"/>
 </div>
 
-## 🖥 Tecnologies
+## 🖥 Tecnologies and tools
 
 This project was developed using cutting edge front-end technologies.
 
